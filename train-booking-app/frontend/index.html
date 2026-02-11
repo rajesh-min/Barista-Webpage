@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RailGo Train Booking</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 0; background: #f4f7fb; color: #1f2937; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 1rem; }
+      .card { background: white; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 1px 8px rgba(0,0,0,.08); }
+      .grid { display: grid; gap: .75rem; grid-template-columns: repeat(4, 1fr); }
+      input, select, button { padding: .6rem; border: 1px solid #d1d5db; border-radius: 6px; }
+      button { background: #2563eb; color: white; border: none; cursor: pointer; }
+      .train { border: 1px solid #e5e7eb; border-radius: 6px; padding: .7rem; margin-bottom: .6rem; }
+      @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>RailGo End-to-End Train Booking</h1>
+
+      <section class="card">
+        <h2>Search Trains</h2>
+        <form id="searchForm" class="grid">
+          <input id="from" placeholder="From code (KLS)" required />
+          <input id="to" placeholder="To code (IPH)" required />
+          <input id="date" type="date" required />
+          <select id="classType">
+            <option>Sleeper</option>
+            <option>AC3</option>
+            <option>AC2</option>
+            <option>Business</option>
+          </select>
+          <button type="submit">Search</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Trains</h2>
+        <div id="trains"></div>
+      </section>
+
+      <section class="card">
+        <h2>API Quick Notes</h2>
+        <p>Use backend at <code>http://localhost:4000</code>. Register/Login first to book tickets via protected APIs.</p>
+      </section>
+    </div>
+
+    <script>
+      const API = 'http://localhost:4000/api';
+      const trainsDiv = document.getElementById('trains');
+
+      document.getElementById('searchForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const from = document.getElementById('from').value;
+        const to = document.getElementById('to').value;
+        const date = document.getElementById('date').value;
+        const classType = document.getElementById('classType').value;
+
+        const res = await fetch(`${API}/trains?from=${from}&to=${to}&date=${date}&classType=${classType}`);
+        const trains = await res.json();
+
+        trainsDiv.innerHTML = trains.length
+          ? trains.map((t) => `<div class='train'><strong>${t.train_name} (${t.train_number})</strong><br>${t.from.code} → ${t.to.code}<br>Departure: ${t.departure_time} | Arrival: ${t.arrival_time}<br>Fare: ₹${t.schedule.fare}</div>`).join('')
+          : '<p>No trains found.</p>';
+      });
+    </script>
+  </body>
+</html>
