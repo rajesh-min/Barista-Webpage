@@ -1,45 +1,74 @@
+(function ($) {
 
-  (function ($) {
-  
   "use strict";
 
-    // NAVBAR
-    $('.navbar-collapse a').on('click',function(){
-      $(".navbar-collapse").collapse('hide');
-    });
+  const THEME_STORAGE_KEY = 'barista-theme';
+  const THEME_CLASS = 'theme-ocean';
 
-    $(function() {
-      $('.hero-slides').vegas({
-          slides: [
-              { src: 'images/slides/sincere-laugh-showing-picture-smartphone-casual-meeting-with-best-friends-restaurant-terrace.jpg' },
-              { src: 'images/happy-waitress-giving-coffee-customers-while-serving-them-coffee-shop.jpg' },
-              { src: 'images/young-female-barista-wear-face-mask-serving-take-away-hot-coffee-paper-cup-consumer-cafe.jpg' }
-          ],
-          timer: false,
-          animation: 'kenburns',
-      });
-    });
-    
-    // CUSTOM LINK
-    $('.smoothscroll').click(function(){
-      var el = $(this).attr('href');
-      var elWrapped = $(el);
-      var header_height = $('.navbar').height() + 60;
-  
-      scrollToDiv(elWrapped,header_height);
-      return false;
-  
-      function scrollToDiv(element,navheight){
-        var offset = element.offset();
-        var offsetTop = offset.top;
-        var totalScroll = offsetTop-navheight;
-  
-        $('body,html').animate({
-        scrollTop: totalScroll
-        }, 300);
+  function applySavedTheme() {
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+
+    if (savedTheme === THEME_CLASS) {
+      document.body.classList.add(THEME_CLASS);
+    }
+  }
+
+  function setupThemeToggle() {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+    if (!themeToggleBtn) {
+      return;
+    }
+
+    themeToggleBtn.addEventListener('click', function () {
+      document.body.classList.toggle(THEME_CLASS);
+
+      if (document.body.classList.contains(THEME_CLASS)) {
+        localStorage.setItem(THEME_STORAGE_KEY, THEME_CLASS);
+      } else {
+        localStorage.removeItem(THEME_STORAGE_KEY);
       }
     });
-  
-  })(window.jQuery);
+  }
 
+  applySavedTheme();
+  setupThemeToggle();
 
+  // NAVBAR
+  $('.navbar-collapse a').on('click', function () {
+    $(".navbar-collapse").collapse('hide');
+  });
+
+  $(function () {
+    $('.hero-slides').vegas({
+      slides: [
+        { src: 'images/slides/sincere-laugh-showing-picture-smartphone-casual-meeting-with-best-friends-restaurant-terrace.jpg' },
+        { src: 'images/happy-waitress-giving-coffee-customers-while-serving-them-coffee-shop.jpg' },
+        { src: 'images/young-female-barista-wear-face-mask-serving-take-away-hot-coffee-paper-cup-consumer-cafe.jpg' }
+      ],
+      timer: false,
+      animation: 'kenburns',
+    });
+  });
+
+  // CUSTOM LINK
+  $('.smoothscroll').click(function () {
+    var el = $(this).attr('href');
+    var elWrapped = $(el);
+    var header_height = $('.navbar').height() + 60;
+
+    scrollToDiv(elWrapped, header_height);
+    return false;
+
+    function scrollToDiv(element, navheight) {
+      var offset = element.offset();
+      var offsetTop = offset.top;
+      var totalScroll = offsetTop - navheight;
+
+      $('body,html').animate({
+        scrollTop: totalScroll
+      }, 300);
+    }
+  });
+
+})(window.jQuery);

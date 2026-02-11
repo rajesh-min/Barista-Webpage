@@ -1198,3 +1198,20 @@ strong {
   }
 }
 
+
+/*---------------------------------------
+  ALTERNATE THEME
+-----------------------------------------*/
+body.theme-ocean {
+  --primary-color:                #1565C0;
+  --secondary-color:              #26A69A;
+  --section-bg-color:             #004D61;
+  --custom-btn-bg-color:          #1565C0;
+  --custom-btn-bg-hover-color:    #26A69A;
+  --link-hover-color:             #64B5F6;
+  --border-color:                 #7FDBFF;
+}
+
+.theme-toggle-btn {
+  min-width: 118px;
+}
