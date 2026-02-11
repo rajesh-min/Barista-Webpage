@@ -13,13 +13,17 @@ https://www.tooplate.com/view/2137-barista-cafe
   --white-color:                  #ffffff;
   --primary-color:                #BC6C25;
   --secondary-color:              #DDA15E;
+  --secondary-color-soft:         #e7b884;
   --section-bg-color:             #b78752;
   --custom-btn-bg-color:          #BC6C25;
   --custom-btn-bg-hover-color:    #DDA15E;
   --dark-color:                   #000000;
+  --surface-color:                #f8f3ed;
   --p-color:                      #717275;
   --border-color:                 #7fffd4;
   --link-hover-color:             #E76F51;
+  --shadow-soft:                  0 14px 40px rgba(30, 18, 5, 0.14);
+  --shadow-strong:                0 22px 50px rgba(30, 18, 5, 0.2);
 
   --body-font-family:             'Plus Jakarta Sans', sans-serif;
 
@@ -46,7 +50,10 @@ https://www.tooplate.com/view/2137-barista-cafe
 
 body {
   background-color: var(--white-color);
-  font-family: var(--body-font-family); 
+  color: var(--p-color);
+  font-family: var(--body-font-family);
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
 }
 
 
@@ -121,6 +128,14 @@ a {
 
 a:hover {
   color: var(--link-hover-color);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--secondary-color-soft);
+  outline-offset: 3px;
 }
 
 b,
@@ -281,6 +296,7 @@ strong {
   CUSTOM BUTTON               
 -----------------------------------------*/
 .custom-btn {
+  box-shadow: var(--shadow-soft);
   background: var(--custom-btn-bg-color);
   border: 2px solid transparent;
   border-radius: var(--border-radius-large);
@@ -295,6 +311,7 @@ strong {
 .custom-btn:hover {
   background: var(--custom-btn-bg-hover-color);
   color: var(--white-color);
+  transform: translateY(-2px);
 }
 
 .custom-border-btn {
@@ -332,6 +349,7 @@ strong {
 .sticky-wrapper.is-sticky .container {
   background: rgba(0, 0, 0, 0.65);
   border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadow-strong);
   padding: 15px 30px;
 }
 
@@ -344,7 +362,9 @@ strong {
 
 .navbar .container {
   background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
   border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadow-soft);
   padding: 15px 30px;
 }
 
@@ -536,7 +556,7 @@ strong {
 }
 
 .hero-section::after {
-  background-color: rgba(0, 0, 0, 0.65);
+  background: linear-gradient(145deg, rgba(221, 161, 94, 0.32), rgba(0, 0, 0, 0.72));
   border-radius: var(--border-radius-medium);
   content: "";
   position: absolute;
@@ -607,6 +627,7 @@ strong {
 
 .about-section .ratio {
   border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadow-soft);
 }
 
 .custom-video {
@@ -645,10 +666,16 @@ strong {
   overflow: hidden;
   max-height: 450px;
   cursor: pointer;
+  box-shadow: var(--shadow-soft);
 }
 
 .team-block-wrap:hover .team-block-image {
   transform: scale(1.2);
+}
+
+.team-block-wrap:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-strong);
 }
 
 .team-block-image-wrap {
@@ -693,6 +720,7 @@ strong {
 .menu-block-wrap {
   background: rgba(0, 0, 0, 0.65);
   border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadow-soft);
   padding: 45px;
 }
 
@@ -754,6 +782,7 @@ strong {
   border-radius: var(--border-radius-medium);
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-soft);
 }
 
 .reviews-block .border-top {
@@ -807,6 +836,7 @@ strong {
   border-radius: var(--border-radius-medium);
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-strong);
   margin-top: 100px;
 }
 
@@ -858,6 +888,7 @@ strong {
 .contact-block-wrap {
   background: var(--primary-color);
   border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadow-soft);
   padding: 0;
   min-height: 200px;
 }
@@ -911,6 +942,7 @@ strong {
 .custom-form .form-control:hover,
 .custom-form .form-control:focus {
   background: var(--primary-color);
+  color: var(--white-color);
   border-color: transparent;
 }
 
@@ -1030,6 +1062,22 @@ strong {
 .social-icon-link:hover {
   background: var(--white-color);
   color: var(--primary-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .team-block-wrap:hover,
+  .custom-btn:hover {
+    transform: none;
+  }
 }
 
 .social-icon-link span {
@@ -1197,4 +1245,3 @@ strong {
     top: 13px;
   }
 }
-
